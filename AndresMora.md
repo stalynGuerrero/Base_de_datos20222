@@ -1,3 +1,0 @@
-Andres Mora
-Ingeniero Industrial
-andresmoravalencia@gmail.com
