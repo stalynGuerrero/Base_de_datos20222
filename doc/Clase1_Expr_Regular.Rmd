@@ -1,0 +1,196 @@
+---
+title: "Expresiones regualres"
+author: "Stalyn Guerrero"
+date: "Febrero de 2021"
+output:
+  slidy_presentation: default
+  font_adjustment: -1
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introducción 
+- Es un lenguaje formal para denotar o describir un lenguaje regula. 
+- El lenguaje es un conjunto de cadenas, entonces las expresiones regulares 
+denotan un conjunto de cadenas pertenecientes a un lenguaje regular. 
+
+### **Definición**
+Una expresión regular (RE, siglas en inglés) es un mecanismo que permite
+seleccionar una cadena o sarta específica de otra cadena de caracteres.
+
+
+## Metacarácters especiales
+
+Algunos elementos que no son metacarácteres, pero que se utilizan como una secuencia de “escape”.
+
+  - **\\a** Representa una “campana” o “beep” que se produce al imprimir este carácter.
+  - **\\e** Representa la tecla “Esc” o “Escape”,
+  - **\\n** Representa un salto de linea, 
+  - **\\r** Representa el “retorno de carro” o “regreso al inicio” o sea el lugar en que la línea vuelve a iniciar 
+  - **\\t** Representa un tabulador.
+  - **\\v** Representa un tabulador vertical
+  - **\\f** Representa un salto de página
+  - **\!**  Representa una busqueda negativa, en otras palabras que no incluya la palabra que especificamos.
+
+
+
+## Barra invertida. {.smaller}
+
+|Carácter| Significado| 
+|--------|----------------------------|
+| \\w    | Indica alfanumérico        |
+| \\W    | No Alfanumérico            |
+| \\d    | Indica Numérico            |
+| \\D    | No numérico                |
+| \\s    | Indica Espacio             |
+| \\S    | No espacio                 |
+| \\     | Genera un escape para darle significado literal a un 	metacarácter.|
+| \\A    | Representa el inicio de la cadena. No un carácter sino una posición.|
+| \\Z    | Representa el final de la cadena. No un carácter sino una posición.|
+| \\b    | Marca la posición de una palabra limitada por espacios en blanco, puntuación o el inicio/final de una cadena. |
+| \\B    | Marca la posición entre dos caracteres alfanuméricos o dos no-alfanuméricos.|
+
+## Ejemplo de barras {.smaller}
+```{r, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE}
+x <- c(
+"¿Con que frecuencia consumió Queso, kumis, yogurt, queso crema o suero costeño?",
+"Usualmente, en UN mes, ¿(...) consume:Granos secos (fríjol, arveja, garbanzo, lenteja, soya, habas)?",
+"16. ¿Con que frecuencia consumió Granos secos (fríjol, arveja, garbanzo, lenteja, soya, habas)?",
+"17. Usualmente, en UN mes, ¿(...) consume:Arroz o pasta?",
+"¿Con que frecuencia consumió Arroz o pasta?",
+"18. Usualmente, en UN mes, ¿(...) consume:Pan?"
+)
+
+gsub(x =  x, pattern =  "\\D", replacement = "" )
+gsub(x =  x, pattern =  "\\d", replacement = "" )
+gsub(x =  x, pattern =  "\\W", replacement = "" )
+gsub(x =  x, pattern =  "\\w", replacement = "" )
+```
+
+## Ejemplo de barras  {.smaller}
+```{r, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE}
+gsub(x =  x, pattern =  "\\S", replacement = "" )
+gsub(x =  x, pattern =  "\\s", replacement = "" )
+
+gsub(x =  x, pattern =  "kumis", replacement = "_____" )
+gsub(x =  x, pattern =  "Usualmente, en UN mes",replacement = "_____" )
+
+```
+
+## Cuantificadores. {.smaller}
+
+Un Cuatinficardor que precede a un carácter cuantifica las veces que este carácter puede aparecer.
+
+- **?** El carácter que precede puede aparecer como mucho una vez.
+- **\+** El carácter que le precede debe aparecer al menos una vez.
+- **\* ** El carácter que le precede puede aparecer cero, una, o más veces.
+- **{}** Las llaves juegan el papel de meta caracteres, para que cumplan su funcionalidad deben estar después de la expresión regular y encierren uno o varios números.
+    - **{n}** Indica que coincide $n$ veces.
+    - **{n,}** Indica que coincide mas $n$ veces.
+    - **{,n}** Indica que coincide hasta $n$ veces.
+    - **{n,m}** Indica que coincide mas $n$ veces y menos de $m$ veces.
+- **\$** El signo de pesos representa el final de la cadena de caracteres o el final de la línea.
+- **\^** El gorro representa el inicio de la cadena.
+
+
+## Cuantificadores  {.smaller}
+```{r, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE}
+gsub(x =  x, pattern =  "?\\.", replacement = "(-_-)" )
+gsub(x =  x, pattern =  "?\\.+", replacement = "-_-" )
+gsub(x =  x, pattern =  "\\.{3}", replacement = "-_-" )
+gsub(x =  x, pattern =  "\\?$", replacement = " ?<- -_-" )
+
+```
+
+## Agrupación
+- **()** Los parentesis son usados para la aplicación de operadores sobre mas de un carácter.
+
+- **[]** Los corchetes agrupan caracteres en grupos o clases. Son útiles cuando es necesario buscar uno de un grupo de caracteres.
+- **[a-z]** Especifica un rango de caracteres.
+- **[^.... ]** Lista de caracteres excluidos
+- **|** Una barra vertical separa las alternativas. Realiza el papel de o.
+- **.** El punto busca cualquier carácter sin incluir los saltos de línea.
+
+## Agrupación  {.smaller}
+```{r, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE}
+gsub(x =  x, pattern =  "[A-Z]", replacement = "(-_-)" )
+gsub(x =  x[1], pattern =  "[a-z]", replacement = "_" )
+gsub(x =  x[1], pattern =  "[á|é|í|ó|ú|ñ]", replacement = "____" )
+gsub(x =  x[3], pattern =  "(\\(.*\\))", replacement = "_____" )
+gsub(x =  x[3], pattern =  ".*(\\(.*\\)).*",  "\\1")
+gsub(x =  x[3], pattern =  ".*\\((.*)\\).*",  "\\1")
+```
+
+## Ejemplos varios  {.smaller}
+Las funciones más usuales que trabajan con expresiones regulares en R son:
+
+__grep__, __grepl__; son funciones usadas para búsquedas de coincidencias:
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE}
+String <- c("regular", "expression", "example", "of", "R", "lenguaje") 
+grep(pattern = "ex", x = String, value = TRUE)
+grep(pattern = "ex", x = String, value = FALSE)
+grepl(pattern = "ex", x = String)
+
+```
+### Ejercicios 
+Empleando la base SB11_20141 de la librería [saber](https://github.com/nebulae-co/saber)
+responda las siguientes preguntas: 
+
+1. ¿cuantos código DANE tiene 4 ceros seguidos? 
+2. ¿Cuantos códigos DANE terminar en número par antecedidos por el número $7$? 
+3. ¿Cuantos códigos DANE inician por impar seguidos del numero $2$? 
+4. ¿Cuantos códigos DANE inician por $2$ o $3$, el cuarto dígito sea $7$ o $9$ y terminen en $1$? 
+5. Con el último dígito del código DANE hacer una tabla de frecuencia.
+
+
+## Solución
+1. ¿Cuantos código DANE tiene 4 ceros seguidos? 
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE, eval=FALSE}
+require(saber)
+data("SB11_20141")
+COD_DENE <- unique(SB11_20141$CODIGO_DANE)
+grep(pattern = "0{4}", x = COD_DENE, value = TRUE)
+grep(pattern = "0000", x = COD_DENE, value = TRUE)
+```
+
+2. ¿Cuantos códigos DANE terminar en número par antecedidos por el número $7$? 
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE, eval=FALSE}
+grep(pattern = "7[24680]$", x = COD_DENE, value = TRUE)
+```
+3. ¿Cuantos códigos DANE inician por impar seguidos del numero $2$? 
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE, eval=FALSE}
+grep(pattern = "^[13579]2", x = COD_DENE, value = TRUE)
+```
+4. ¿Cuantos códigos DANE inician por 2 o 3 y el cuarto dígito sea 7 o 9 y termine en 1? 
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE, eval=FALSE}
+grep(pattern = "^[23]\\d{3}[79].*1$", x = COD_DENE, value = TRUE)
+```
+5. Con el último dígito del código DANE hacer una tabla de frecuencia.  
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE, eval=FALSE}
+x <- as.numeric(gsub(pattern = "\\d{11}", x = COD_DENE, replacement = ""))
+(table(x))
+x <- as.numeric(substr(x = COD_DENE, 12,12))
+(table(x))
+```
+
+### Ejercicios 2 
+Empleando la base SB11_20141 de la librería [saber](https://github.com/nebulae-co/saber)
+responda las siguientes preguntas: 
+
+1. Eliminar todos los espacios que están al final de los nombres de la sede. 
+2. Completar la palabra **COLEGIO** en los nombres de las sede. 
+
+```{r, echo = FALSE, warning=FALSE, message=FALSE, error=FALSE, eval=FALSE}
+Nombre_Sede <- unique(SB11_20141$NOMBRE_SEDE)
+gsub(pattern = "?\\s*$", replacement = "",  x = Nombre_Sede)
+gsub(pattern = "^COL\\w", replacement = "COLEGIO ",  x = Nombre_Sede)
+```

@@ -1,0 +1,77 @@
+---
+title: "Segunda parte"
+subtitle: "Manejo de bases de datos"
+author: "Stalyn Guerrero"
+date: 'Universidad el Bosque'
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Presentación del contenido.
+
+-   Buenas prácticas de la programación.
+
+-   Introducción a la programación en R (listas).
+
+-   Descargar y analizar información desde **twitter**
+
+-   Expresiones regulares y análisis de textos (`stringr`).
+
+-   Descargar imagines de satélite(`rgee`).
+
+-   Introducción al manejo de bases de datos (`dplyr`, `purrr`)
+
+-   Programación en paralelo (`future`, `furrr`).
+
+-   Creación de gráficas en R (`ggplot2`).
+
+-   Creación de reportes desde R (`rmarkdown`)
+
+-   Creación de dashboard (`Shiny`)
+
+## Evaluación (50%)
+
+-   Examen práctico (20%)
+
+    El examen tendrá un objetivo de investigación y una base de datos donde el estudiante deberá realizar un análisis exploratorio (tablas de frecuencia, gráficas, análisis descriptivo, entre otros), e inferencial (Pruebas de hipótesis) que permitan dar respuesta a la pregunta de investigación.
+
+    La entrega del examen debe contener un archivo pdf con los análisis realizados y los resultados obtenidos, así como las rutinas de R implementadas en el análisis.
+
+    -   Documento pdf (10%)
+
+    -   Rutinas en R (10%)
+
+## Evaluación (50%)
+
+Desarrollo de un aplicativo para el análisis de información (30%)
+
+Requisitos:
+
+-   Presentación de una propuesta de trabajo (10%): La presentación debe contener introducción del tema, objetivo de investigación, descripción de la fuente de información (base de datos), propuesta de la metodología y resultados esperados. El tiempo para realizar la presentación es de 10 minutos.
+
+-   Desarrollo del aplicativo 20%.
+
+-   Presentación del aplicativo 5%
+
+## Bibliográfica
+
+-   <https://csgillespie.github.io/efficientR/index.html>
+
+-   <https://bookdown.org/gaston_becerra/curso-intro-r/>
+
+-   <https://r4ds.had.co.nz/strings.html>
+
+-   <https://www.tidytextmining.com/index.html>
+
+-   <https://bookdown.org/f_lennert/introduction-to-r/>
+
+-   <https://bookdown.org/yihui/rmarkdown/>
+
+-   <https://ggplot2-book.org/>
+
+-   <https://bookdown.org/hadrien/how_to_build_a_shiny_app_from_scratch/>
+
+-   <https://engineering-shiny.org/index.html>
