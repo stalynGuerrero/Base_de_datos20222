@@ -1,2 +1,4 @@
 # Base_de_datos20222
-Ejemplo de git 
+Stalyn Guerrero 
+Docente de la universidad el Bosque. 
+
