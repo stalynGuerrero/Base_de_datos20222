@@ -1,2 +1,0 @@
-Laura ROdriguez
-Economista
