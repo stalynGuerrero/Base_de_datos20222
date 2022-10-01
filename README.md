@@ -3,3 +3,5 @@ Stalyn Guerrero
 Docente de la universidad el Bosque. 
 Diana Parra Galvis
 Estudiante
+Andres Rico
+Estudiante
