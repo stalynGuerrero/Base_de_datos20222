@@ -1,0 +1,4 @@
+<div style="text-align: center">Nicolás ávila</div>
+<div style="text-align: center">Ingeniero Industrial</div>
+
+<div style="text-align: center"><img src="https://qph.cf2.quoracdn.net/main-qimg-8b9d64dd7a997f9c55116b167429a478" width="400px"></div>
