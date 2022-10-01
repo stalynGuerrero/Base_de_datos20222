@@ -1,3 +1,3 @@
-Jaime Fierro
-Economista
-Analista de Datos
+#Oscar Leonardo Vanegas
+##Ingeniero Industrial
+##Analista de Datos
