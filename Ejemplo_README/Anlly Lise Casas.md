@@ -1,3 +1,3 @@
 Anlly Casas
-Ingeniera de sistemas
+Ingeniero de sistemas      
 angie93casas@gmail.com
