@@ -1,4 +1,0 @@
-
-# Luis Acuña Cantillo
-#Biólogo 
-

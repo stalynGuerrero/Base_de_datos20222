@@ -1,5 +1,0 @@
-#si sale error al subir, correr la siguiente linea en la consola
-git config --global user.email "nr.lopez.herrera@gmail.com"
-#Nelson Ricardo
-##Lopez Herrera
-###Geologo

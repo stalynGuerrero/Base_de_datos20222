@@ -1,2 +1,0 @@
-Luis Acuna-Cantillo
-Biologist
