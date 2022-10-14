@@ -149,11 +149,36 @@ c(Max = max(x),
   Media = mean(x))
 })
 
-min
-max
-median()
-mean()
-quantile()#0.25, 0.75
+apply(
+  X = iris[, -5],
+  MARGIN = 2,
+  FUN = function(x) {
+    c(
+      Max = max(x),
+      Min = min(x),
+      Media = mean(x),
+      Mediana = median(x),
+      Q1 = quantile(x, probs = .25),
+      Q3 = quantile(x, probs = .75)
+    )
+  }
+)
+
+lapply(
+  X = (iris[, -5]),
+  FUN = function(x) {
+    c(
+      Max = max(x),
+      Min = min(x),
+      Media = mean(x),
+      Mediana = median(x),
+      Q1 = quantile(x, .25),
+      Q3 = quantile(x, .75)
+    )
+  }
+)
+
+
 
 
 
