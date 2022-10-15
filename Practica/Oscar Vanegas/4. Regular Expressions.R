@@ -35,4 +35,16 @@ egresados <- read_excel("~/Desktop/Base_de_Datos_2022/Base_de_datos20222/Data/Da
 unique(egresados$'Fecha De Grado')
 sum(is.na(egresados$`Fecha De Grado`))
 
+#Una extraccion de la base donde se omiten los NA
 egresados_sinna <- na.omit(egresados[,-4])
+
+fechas_grado <- egresados_sinna$`Fecha De Grado`
+
+#Extraer con expresiones regulares de una lista, value TRUE para obtener valores
+Y <- grep(pattern="[A-z]",x=fechas_grado,value = TRUE)
+#El argumento \\2 me dice que tome la segunda componente de la regEx
+View(data.frame(fechas_grado ,
+                day = gsub(pattern=".*(\\d{2} |,).*", x=fechas_grado, "\\1"),
+                year = gsub(pattern= ".*(\\d{4}).*", x=fechas_grado, "\\1")
+                )
+     )
