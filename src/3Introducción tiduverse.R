@@ -85,6 +85,51 @@ salud %>% filter_at(.vars = c("HgSangre", "HgCabello",
 
 
 ## familia mutate
+salud %>% str()
+salud$HgDummy <- ifelse(salud$HgSangre >1, 1, 0)
+
+salud %>% mutate(HgDummy2 =  ifelse(HgSangre >1, 1, 0))
+set.seed(15102022)
+aleatorio <- runif(n = nrow(salud), min = 0, max = 1) 
+
+salud <- salud %>% mutate(sel = ifelse(aleatorio < .1, 1, 0)) 
+salud %>% 
+  mutate(sel2 = ifelse( runif(n = nrow(salud), min = 0, max = 1) < .1, 1, 0)) 
+
+## case_when()
+
+salud <-
+  salud %>% mutate(
+    HgRiesgo = case_when(HgSangre < 1 ~ "Bajo",
+                         HgSangre < 2 ~ "Moderado",
+                         TRUE ~ "Alto"),
+    
+    HgRiesgoC = case_when(
+      between(HgCabello, 1, 2) ~ "Moderado",
+      HgCabello < 1 ~ "Bajo",
+      TRUE ~ "Alto"
+    ),
+    EdadCat = cut(Edad, seq(0, 70, by = 5)),
+    Riesgo = 0.3 * HgSangre + HgCabello * 0.2 + 
+             HgOrina * 0.1 + PdSangre * 0.4,
+    MediaSagre  = mean(HgSangre),
+    ejemplo = NULL
+  )
+
+salud %>%
+  mutate_at(.vars = c("HgSangre",   "HgCabello",   "HgOrina",  "PdSangre"),
+            function(x)ifelse(x >2.5, 1,0)
+            )
+
+salud %>%
+  mutate_at(.vars = c("HgSangre",   "HgCabello",   "HgOrina",  "PdSangre"),
+            function(x) {
+              case_when(x < 1 ~ "Bajo",
+                        x < 2 ~ "Moderado",
+                        TRUE ~ "Alto")
+            })
+
+
 mutate()
 mutate_all()
 mutate_at()
@@ -92,9 +137,46 @@ mutate_if()
 
 ## familia transmute
 transmute()
+  salud %>% transmute(
+    HgRiesgo = case_when(HgSangre < 1 ~ "Bajo",
+                         HgSangre < 2 ~ "Moderado",
+                         TRUE ~ "Alto"),
+    
+    HgRiesgoC = case_when(
+      between(HgCabello, 1, 2) ~ "Moderado",
+      HgCabello < 1 ~ "Bajo",
+      TRUE ~ "Alto"
+    ),
+    EdadCat = cut(Edad, seq(0, 70, by = 5)),
+    Riesgo = 0.3 * HgSangre + HgCabello * 0.2 + 
+      HgOrina * 0.1 + PdSangre * 0.4,
+    MediaSagre  = mean(HgSangre),
+    ejemplo = NULL
+  )
+
+  bind_cols(
+    salud,
+    salud %>%
+      transmute_at(.vars = c("HgSangre",   "HgCabello",   "HgOrina",  "PdSangre"),
+                   function(x) {
+                     case_when(x < 1 ~ "Bajo",
+                               x < 2 ~ "Moderado",
+                               TRUE ~ "Alto")
+                   }) %>% select_all(function(x)
+                     paste0(x, "Cat"))
+  ) %>% View()
+  
 
 ## familia summarise o summarize
-summarise()
+  salud %>%  summarise(MediaSagre = mean(HgSangre), 
+                       SdSagre = sd(HgSangre), 
+                       MaxSagre = max(HgSangre))
+  
+salud %>% summarise_if(is.numeric, list(Media = mean, Sd = sd, Max = max)) 
+
+quantile()
+
+
 summarise_at()
 summarise_all()
 summarise_if()
