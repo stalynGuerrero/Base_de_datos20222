@@ -58,19 +58,30 @@ PI <- 0.02
 var_PH <- "HgSangre"
 cod_depto <- "01"
 
-temp <- salud %>% filter(Depto == cod_depto) %>%
+temp <- salud %>% filter_at(.vars = all_of(bygrup), all_vars(. == cod_depto) ) %>%
   mutate_at(.vars = all_of(var_PH),
             function(x)
               ifelse(x > cota, 1, 0)) %>%
   group_by_at(var_PH) %>% tally()
 
-prop.test(x = as.numeric(temp[2,2]), 
+test_prop <- prop.test(x = as.numeric(temp[2,2]), 
           n = sum(temp$n), p = PI)
+
+data.frame(Estadistica = test_prop$statistic,
+           pvalor = test_prop$p.value, 
+           Lim_Inf = test_prop$conf.int[1],
+           Lim_Sup = test_prop$conf.int[2]
+)
 
 mu <- 3
 
-t.test(x = salud[[var_PH]], mu = mu)
-
+test <- t.test(x = salud[[var_PH]], mu = mu)
+str(test)
+data.frame(Estadistica = test$statistic,
+  pvalor = test$p.value, 
+           Lim_Inf = test$conf.int[1],
+           Lim_Sup = test$conf.int[2]
+           )
 
 
 
