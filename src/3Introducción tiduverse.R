@@ -173,26 +173,50 @@ transmute()
                        MaxSagre = max(HgSangre))
   
 salud %>% summarise_if(is.numeric, list(Media = mean, Sd = sd, Max = max)) 
+salud %>% summarise_if(is.numeric,function(x) quantile(x,.75))
 
-quantile()
-
+salud %>% summarise_at(.vars = vars(starts_with("Hg")),
+                       list(Media = mean, Sd = sd, Max = max))
 
 summarise_at()
 summarise_all()
 summarise_if()
 
 ## familia group_by
+salud %>% group_by(Depto) %>% 
+  summarise(MediaSagre = mean(HgSangre), 
+            SdSagre = sd(HgSangre), 
+            MaxSagre = max(HgSangre))
+
+salud %>% group_by(Depto) %>% 
+  mutate(media = mean(Embarazada)) %>%  
+  summarise(media = unique(media))
+
+salud %>%
+  mutate(RiesgoSexo = case_when(Sexo == "Hombre" & HgSangre > 4 ~ "Alto",
+                                Sexo == "Mujer" & HgSangre > 3 & Edad >40 ~ "Alto",
+                                Sexo == "Mujer" & HgSangre > 2 & Embarazada == 1 ~ "Alto",
+                                TRUE ~ "Bajo")) %>% 
+  group_by(Depto,RiesgoSexo, Sexo) %>% tally()
+
+
+
 group_by()
 group_by_all()
 group_by_at()
 group_by_if()
 
 ## familia group_nest
-group_nest()
+salud %>%  group_nest(Depto, Mpio)
+## gather() y spread()
+salud %>% group_by(Sexo, EdadCat) %>%
+  summarise(Cancer = mean(Cancer)) %>% 
+  spread(data = ., key = "Sexo",value = "Cancer") %>% 
+  gather(data = ., key = "Sexo", value = "Cancer", -EdadCat) %>% 
+  data.frame()
 
-
-
-
+reshape2::dcast()
+reshape2::melt()
 
 
 
