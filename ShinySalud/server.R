@@ -1,12 +1,16 @@
 library(shiny)
-
+library(plotly)
 
 server <- function(input, output) {
   
-  output$plot_cont <- renderPlot({
-    hist(salud[[input$var_cont]], probability = TRUE, 
-         xlab = input$var_cont,
-         ylab = "", main = "Histograma", col = "blue")
+  output$plot_cont <- renderPlotly({
+    p1 <- ggplot(data = salud, aes_string(x = input$var_cont)) + 
+      geom_histogram(aes(y = ..density..), bins = 20, 
+                     fill = "#61A7F5", color = 1) + 
+      labs(y = "", title = "Histograma") + 
+      theme_light(base_size = 20) +
+      theme(plot.title = element_text(hjust = 0.5))
+    ggplotly(p1)
   })
   
   output$plot_cuali <- renderPlot({

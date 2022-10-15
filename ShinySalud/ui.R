@@ -1,17 +1,19 @@
 library(shiny)
 
 ui <- fluidPage(
-  
   # Application title
   titlePanel("Mi primer Shiny"),
   ## Genéricas
+  sidebarLayout(
+    
+    sidebarPanel(
   selectInput(inputId = "bygrup",
               label =  "Resultados agregados por:",
               choices = c("Departamento" = "Depto",
                           "Municipio" = "Mpio",
                           "Estrato", "Sexo"), 
-              selected = "Depto" ),
-  
+              selected = "Depto" )
+  ,
   selectInput(inputId = "var_cont",
               label =  "Variables cuantitativas:",
               choices = c("Mercurio en sangre" = "HgSangre",
@@ -46,15 +48,25 @@ ui <- fluidPage(
                           "Mercurio en orina" = "HgOrina",
                           "Plomo en sangre" = "PdSangre"
                           ), 
-              selected = "HgSangre" ),
+              selected = "HgSangre" )
+    ),
   ## Salida de resultados 
-  uiOutput("sub_grupos"),
-  tableOutput("test_prop1"),
-  tableOutput("test_cont"),
-  dataTableOutput("Tabla_Cont"),
-  dataTableOutput("Tabla_Cualita"),
-  plotOutput("plot_cont"),
-  plotOutput("plot_cuali")
+  mainPanel(
+    tabsetPanel(
+      tabPanel("Plot", 
+               plotlyOutput("plot_cont"),
+               plotOutput("plot_cuali")),
+      
+      tabPanel("Pruebas de hipótesis", 
+               uiOutput("sub_grupos"),
+               tableOutput("test_prop1"),
+               tableOutput("test_cont"),
+               ),
+      tabPanel("Descriptivas",  
+               dataTableOutput("Tabla_Cont"),
+               dataTableOutput("Tabla_Cualita"))
+      )
+    )
+      
+  ))
 
-  
-)
