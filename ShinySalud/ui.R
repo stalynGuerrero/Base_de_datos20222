@@ -1,6 +1,9 @@
 library(shiny)
 
 ui <- fluidPage(
+  
+  includeCSS("www/prueba2.css"),
+  
   # Application title
   titlePanel("Mi primer Shiny"),
   ## Genéricas
@@ -54,7 +57,9 @@ ui <- fluidPage(
   mainPanel(
     tabsetPanel(
       tabPanel("Plot", 
+               h1("Gráfica para continuas"),
                plotlyOutput("plot_cont"),
+               h1("Gráfica para cualitativas"),
                plotOutput("plot_cuali")),
       
       tabPanel("Pruebas de hipótesis", 

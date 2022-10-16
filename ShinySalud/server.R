@@ -1,6 +1,22 @@
+######################################################
+## Introducción a Shiny
+## Stalyn Guerrero
+## Versión 1
+## Fecha: 15/10/2022
+######################################################
+
+# librerias ---------------------------------------------------------------
+library(openxlsx)
+library(haven) # SPSS, Stata, SAS
+library(data.table) # data.table::fread()
+library(tidyverse)
+library(DataExplorer)
 library(shiny)
 library(plotly)
 
+# Lectura de base de datos ------------------------------------------------
+salud <- openxlsx::read.xlsx(xlsxFile = "Data/Salud.xlsx")
+#openxlsx::write.xlsx(salud, "Data/Salud.xlsx")
 server <- function(input, output) {
   
   output$plot_cont <- renderPlotly({
@@ -77,5 +93,5 @@ server <- function(input, output) {
   })
 }
 
-shinyApp(ui, server)
+#shinyApp(ui, server)
 
