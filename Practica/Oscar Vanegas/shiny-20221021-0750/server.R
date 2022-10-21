@@ -260,9 +260,9 @@ server <- function(input, output) {
     total_nacional %>% mutate_all(~replace(., is.na(.), 0))
     
     #Se elabora el gráfico y se agregan 3 líneas
-    fig <- plot_ly(filtrado_depto, x = ~total_nacional$Var1, y = ~total_nacional$Freq, name ="Total Nacional", type="scatter", mode = 'lines') 
-    fig <- fig %>% add_trace(y = ~total_nacional$Freq.x, name = 'Total departamental', mode = 'lines') %>%
-      add_trace(y = ~total_nacional$Freq.y, name = 'Hombres departamento', mode = 'lines') %>%
+    fig <- plot_ly(filtrado_depto, x = ~total_nacional$Var1, y = ~total_nacional$Freq.x, name ="Total Nacional", type="scatter", mode = 'lines') 
+    fig <- fig %>% add_trace(y = ~total_nacional$Freq.y, name = 'Total departamental', mode = 'lines') %>%
+      add_trace(y = ~total_nacional$Freq, name = 'Hombres departamento', mode = 'lines') %>%
       layout(title = "",
              xaxis = list(title = "Número de la semana"),
              yaxis = list(title = "Conteo de casos"))
